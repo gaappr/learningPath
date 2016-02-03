@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+    <head>
+        <script src="node_modules/socket.io/node_modules/socket.io-client/socket.io.js"></script>
+        <script src="node_modules/downloader/lib/downloader.js"></script>
+        <script src="js/libs/CSInterface.js"></script>
+        <script>
+            var stepComplete = false;
+            var globalTimeout = undefined;
+            var csInterface = new CSInterface();
+            var socket = io('localhost:45063');
+            
+            //Setting up the downloader to get the remote file
+            var fileName = "test.jpg";
+            var downloadLocation = "/Users/gaappr/Desktop/";
+            var remoteLoc = "http://gaappr.cias.rit.edu/ps_test/";
+            var downloader = require('downloader');
+            downloader.on('done',function(msg){
+                csInterface.evalScript("addNew()");   
+            });
+            downloader.on('error', function(msg){
+                console.log(msg); 
+            });
+            
+            socket.on('connect', function (data) {
+                console.log("connected!")
+            });
+            
+            socket.on('beginPoll', poll );
+            
+            function poll(){
+                checkMode();
+                if( !stepComplete ){
+                    globalTimeout = setTimeout(poll, 2000);
+                }
+            }
+            
+            function init(){
+                var button = document.getElementById("btn");
+                btn.onclick = function(){ 
+                    socket.emit( 'clicked', {my: 'data'} );
+                    downloader.download(remoteLoc + fileName, downloadLocation);
+                };
+            }
+
+            //Checks to see if the document mode has been changed
+            function checkMode(){
+                csInterface.evalScript("getDocMode()",
+                    function(res){
+                        if( res == "DocumentMode.CMYK"){
+                            socket.emit("modeChanged", {"mode" : res});
+                            stepComplete = true;
+                            if(globalTimeout){
+                                clearTimeout(globalTimeout);
+                                globalTimeout = undefined;
+                            }
+                        }    
+                });  
+            }
+        </script>
+        <style>
+            body{
+                background-color:#445878;
+            }
+            button{
+                width:150px;
+                margin:auto;
+            }
+            #button{
+                width:150px;
+                margin:auto;
+            }
+        </style>
+    </head>
+    <body onload="init()">
+        <div id="button">
+            <button id="btn">Start Learning</button>
+        </div>
+    </body>
+</html>

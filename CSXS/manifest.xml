@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ExtensionManifest ExtensionBundleId="com.gaappr.learningpath" ExtensionBundleName="Hello world" ExtensionBundleVersion="1.0" Version="6.0">
+  <ExtensionList>
+    <Extension Id="com.gaappr.learningpath.extension" Version="1.0"/>
+  </ExtensionList>
+  <ExecutionEnvironment>
+    <HostList>
+      <Host Name="PHXS" Version="16.0"/>
+    </HostList>
+    <LocaleList>
+      <Locale Code="All"/>
+    </LocaleList>
+    <RequiredRuntimeList>
+      <RequiredRuntime Name="CSXS" Version="6.0"/>
+    </RequiredRuntimeList>
+  </ExecutionEnvironment>
+  <DispatchInfoList>
+    <Extension Id="com.gaappr.learningpath.extension">
+      <DispatchInfo>
+        <Resources>
+            <MainPath>./index.html</MainPath>
+            <ScriptPath>./jsx/eventTest.jsx</ScriptPath>
+            <CEFCommandLine>
+                <Parameter>--enable-nodejs</Parameter>
+            </CEFCommandLine>
+        </Resources>
+        <UI>
+          <Type>Panel</Type>
+          <Menu>Learning Path</Menu>
+          <Geometry>
+            <Size>
+              <Height>200</Height>
+              <Width>200</Width>
+            </Size>
+          </Geometry>
+        </UI>
+      </DispatchInfo>
+    </Extension>
+  </DispatchInfoList>
+</ExtensionManifest>

@@ -1,0 +1,18 @@
+{
+  "name": "learningpath",
+  "version": "1.0.0",
+  "description": "An Adobe learning path testing platform",
+  "main": "index.js",
+  "dependencies": {
+    "socket.io": "^1.4.4"
+  },
+  "devDependencies": {
+    "downloader": "^0.1.2",
+    "socket.io": "^1.4.5"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Graham Anthony",
+  "license": "ISC"
+}
