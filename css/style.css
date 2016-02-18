@@ -1,0 +1,26 @@
+body {
+    background-color: #445878;
+    margin:0px;
+    padding:0px;
+}
+            
+#loginForm {
+    width: 150px;
+    margin:0 auto;
+}
+            
+#loginForm button {
+    width: 150px;
+    margin:0 auto;
+}
+            
+#loginForm #un {
+    width: 150px;
+    margin:0 auto;
+}
+
+#loginForm label{
+    color:white;
+    margin: 0 auto;
+    text-align:center;
+}
