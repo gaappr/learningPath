@@ -1,7 +1,10 @@
+var $ = require('jQuery');
+
 var stepComplete = false;
 var globalTimeout = undefined;
 var csInterface = new CSInterface();
-var socket = io('http://localhost:45063');
+var learningServerURL = "http://localhost:45063";
+var socket;
 
 //Setting up the downloader to get the remote file
 var fileName = "test.jpg";
@@ -15,11 +18,22 @@ downloader.on('error', function (msg) {
     console.log('downloader error: ' + msg);
 });
 
-socket.on('connect', function (data) {
-    console.log("connected!")
-});
+/**
+* Setup the event handlers that this socket requires
+**/
+function setupSocket(){
+    socket=io(learningServerURL);
 
-socket.on('beginPoll', poll);
+    socket.on('beginPoll', poll);
+    
+    socket.on('connect', function(data){
+        console.log('connect: ' + data);
+    });
+
+    socket.on('loginVerified', function(){
+       downloader.download(remoteLoc + fileName, downloadLocation);
+    });
+}
 
 function poll() {
     checkMode();
@@ -28,15 +42,6 @@ function poll() {
     }
 }
 
-function init() {
-    var button = document.getElementById("btn");
-    btn.onclick = function () {
-        socket.emit('clicked', {
-            my: 'data'
-        });
-        downloader.download(remoteLoc + fileName, downloadLocation);
-    };
-}
 
 //Checks to see if the document mode has been changed
 function checkMode() {
@@ -54,3 +59,14 @@ function checkMode() {
             }
         });
 }
+
+$(document).ready(function(){
+    setupSocket();
+
+    $("#btn").on('click', function(event){
+        event.preventDefault();
+        socket.emit('loginAttempt', {
+            username:$("#username").val()
+        });
+    });
+});

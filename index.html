@@ -3,18 +3,19 @@
 
 <head>
     <link type="text/css" rel="stylesheet" href="css/style.css" />
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/socket.io/node_modules/socket.io-client/socket.io.js"></script>
-<!--    <script src="node_modules/downloader/lib/downloader.js"></script>-->
     <script src="js/libs/CSInterface.js"></script>
     <script src="js/app.js"></script>
 
 </head>
 
-<body onload="init()">
+<body>
     <div id="loginForm">
-        <label for="un">Username</label>
-        <input type="text" id="un" />
-        <button id="btn">Start Learning</button>
+        <form id="unForm">
+            <input type="text" id="username" placeholder="Username" name="username"/>
+            <button id="btn" type="submit">Start Learning</button>
+        </form>
     </div>
 </body>
 
